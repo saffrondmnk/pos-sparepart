@@ -29,6 +29,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/products/{product}/update-stock', [ProductController::class, 'showUpdateStock'])->name('products.stock.show');
         Route::patch('/products/{product}/stock', [ProductController::class, 'updateStock'])->name('products.stock.update');
         Route::get('/products/{product}/stock-history', [ProductController::class, 'stockHistory'])->name('products.stock.history');
+        Route::get('/stock-history', [ProductController::class, 'allStockHistory'])->name('stock.history.all');
+        Route::get('/products/{product}/edit-sku', [ProductController::class, 'editSku'])->name('products.sku.edit');
+        Route::patch('/products/{product}/sku', [ProductController::class, 'updateSku'])->name('products.sku.update');
         Route::resource('categories', CategoryController::class);
     });
 

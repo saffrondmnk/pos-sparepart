@@ -4,11 +4,51 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\StockHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
+    private function generateSku(Category $category, string $productName): string
+    {
+        // Get first letter of each word in category name
+        $categoryWords = explode(' ', $category->name);
+        $categoryPart = '';
+        foreach ($categoryWords as $word) {
+            $cleanWord = preg_replace('/[^a-zA-Z]/', '', $word);
+            if (!empty($cleanWord)) {
+                $categoryPart .= strtoupper(substr($cleanWord, 0, 1));
+            }
+        }
+        
+        // Get first letter of each word in product name
+        $productWords = explode(' ', $productName);
+        $productPart = '';
+        foreach ($productWords as $word) {
+            $cleanWord = preg_replace('/[^a-zA-Z]/', '', $word);
+            if (!empty($cleanWord)) {
+                $productPart .= strtoupper(substr($cleanWord, 0, 1));
+            }
+        }
+        
+        // Get next sequential number for this category
+        $lastProduct = Product::where('category_id', $category->id)
+            ->where('sku', 'like', 'SKU-' . $categoryPart . $productPart . '-%')
+            ->orderBy('id', 'desc')
+            ->first();
+        
+        if ($lastProduct) {
+            // Extract number from last SKU
+            preg_match('/-(\d{3})$/', $lastProduct->sku, $matches);
+            $nextNumber = isset($matches[1]) ? intval($matches[1]) + 1 : 1;
+        } else {
+            $nextNumber = 1;
+        }
+        
+        return 'SKU-' . $categoryPart . $productPart . '-' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+    }
+
     public function index(Request $request)
     {
         $query = Product::with('category');
@@ -54,9 +94,20 @@ class ProductController extends Controller
             $validated['image'] = 'images/products/' . $imageName;
         }
 
-        $validated['sku'] = 'SKU-' . strtoupper(Str::random(8));
+        $category = Category::find($validated['category_id']);
+        $validated['sku'] = $this->generateSku($category, $validated['name']);
 
-        Product::create($validated);
+        $product = Product::create($validated);
+
+        // Create stock history entry for new product
+        $product->stockHistories()->create([
+            'user_id' => auth()->id(),
+            'quantity_before' => 0,
+            'quantity_after' => $validated['stock_quantity'],
+            'quantity_changed' => $validated['stock_quantity'],
+            'type' => 'add',
+            'notes' => 'Initial stock when product created',
+        ]);
 
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
@@ -165,5 +216,54 @@ class ProductController extends Controller
             ->paginate(20);
 
         return view('products.stock-history', compact('product', 'histories'));
+    }
+
+    public function allStockHistory(Request $request)
+    {
+        $query = StockHistory::with(['product', 'user']);
+        
+        if ($request->has('product') && $request->product) {
+            $query->where('product_id', $request->product);
+        }
+        
+        if ($request->has('type') && $request->type) {
+            $query->where('type', $request->type);
+        }
+        
+        if ($request->has('date_from') && $request->date_from) {
+            $query->whereDate('created_at', '>=', $request->date_from);
+        }
+        
+        if ($request->has('date_to') && $request->date_to) {
+            $query->whereDate('created_at', '<=', $request->date_to);
+        }
+        
+        $histories = $query->orderBy('created_at', 'desc')->paginate(20);
+        $products = Product::orderBy('name')->get();
+        
+        $summary = [
+            'total_add' => StockHistory::where('type', 'add')->sum('quantity_changed'),
+            'total_subtract' => StockHistory::where('type', 'subtract')->sum('quantity_changed'),
+            'total_transactions' => StockHistory::count(),
+        ];
+        
+        return view('products.all-stock-history', compact('histories', 'products', 'summary'));
+    }
+
+    public function editSku(Product $product)
+    {
+        return view('products.edit-sku', compact('product'));
+    }
+
+    public function updateSku(Request $request, Product $product)
+    {
+        $validated = $request->validate([
+            'sku' => 'required|string|max:255|unique:products,sku,' . $product->id,
+        ]);
+
+        $oldSku = $product->sku;
+        $product->update(['sku' => $validated['sku']]);
+
+        return redirect()->route('products.index')->with('success', 'SKU updated from ' . $oldSku . ' to ' . $validated['sku']);
     }
 }

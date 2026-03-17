@@ -26,6 +26,9 @@
                         <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
                             {{ __('Categories') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('stock.history.all')" :active="request()->routeIs('stock.history.all')">
+                            {{ __('Stock History') }}
+                        </x-nav-link>
                         @endif
                         
                         @if(Auth::user()->isAdmin())
@@ -128,6 +131,9 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
                     {{ __('Categories') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('stock.history.all')" :active="request()->routeIs('stock.history.all')">
+                    {{ __('Stock History') }}
                 </x-responsive-nav-link>
                 @endif
                 
