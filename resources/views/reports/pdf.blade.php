@@ -85,7 +85,7 @@
     <div class="header">
         @if($settings->logo_path && file_exists(public_path($settings->logo_path)))
         <div style="margin-bottom: 10px;">
-            <img src="{{ public_path($settings->logo_path) }}" alt="Logo" style="max-height: 50px; max-width: 100px;">
+            <img src="{{ public_path($settings->logo_path) }}" alt="Logo" style="max-height: 50px; max-width: 50px; height: 50px; width: 50px; object-fit: cover; border-radius: 50%;">
         </div>
         @endif
         <div class="company-name">{{ $settings->company_name }}</div>
