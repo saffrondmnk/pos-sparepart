@@ -38,6 +38,7 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(Login::class, function (Login $event) {
             UserSession::create([
                 'user_id' => $event->user->id,
+                'session_id' => session()->getId(),
                 'ip_address' => request()->ip(),
                 'user_agent' => request()->userAgent(),
                 'login_at' => now(),

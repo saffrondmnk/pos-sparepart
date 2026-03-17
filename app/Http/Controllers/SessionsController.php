@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 
 class SessionsController extends Controller
 {
@@ -103,6 +104,11 @@ class SessionsController extends Controller
         if ($session->user_id === $currentUser->id) {
             return redirect()->route('sessions.index')
                 ->with('error', 'You cannot force logout your own session');
+        }
+        
+        // Delete the actual Laravel session from database to force immediate logout
+        if ($session->session_id) {
+            DB::table('sessions')->where('id', $session->session_id)->delete();
         }
         
         // Update session status

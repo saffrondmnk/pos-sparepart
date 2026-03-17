@@ -14,6 +14,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
         ]);
+        
+        // Append ValidateSession middleware to web group
+        $middleware->appendToGroup('web', \App\Http\Middleware\ValidateSession::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
