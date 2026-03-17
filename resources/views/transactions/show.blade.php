@@ -13,7 +13,10 @@
                     Download Receipt
                 </a>
                 <a href="{{ route('transactions.index') }}" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
-                    Back to List
+                    List Transaction
+                </a>
+                <a href="{{ route('transactions.create') }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                    Back to New Sale
                 </a>
             </div>
         </div>
