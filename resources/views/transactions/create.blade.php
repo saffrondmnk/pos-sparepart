@@ -258,10 +258,23 @@ function renderCustomerTabs() {
 
 // Add new customer
 function addCustomer() {
-    const newId = 'customer_' + (customers.length + 1);
+    // Find the highest customer number
+    let maxNumber = 0;
+    customers.forEach(customer => {
+        const match = customer.name.match(/Customer (\d+)/);
+        if (match) {
+            const num = parseInt(match[1]);
+            if (num > maxNumber) {
+                maxNumber = num;
+            }
+        }
+    });
+    
+    const newNumber = maxNumber + 1;
+    const newId = 'customer_' + newNumber + '_' + Date.now();
     const newCustomer = {
         id: newId,
-        name: 'Customer ' + (customers.length + 1),
+        name: 'Customer ' + newNumber,
         cart: []
     };
     customers.push(newCustomer);
