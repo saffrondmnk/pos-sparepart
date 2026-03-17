@@ -19,9 +19,9 @@
             <div class="text-center">
                 <a href="/">
                     @if(isset($settings) && $settings->logo_path && file_exists(public_path($settings->logo_path)))
-                    <img src="{{ asset($settings->logo_path) }}" alt="Logo" class="w-20 h-20 object-contain mx-auto">
+                    <img src="{{ asset($settings->logo_path) }}" alt="Logo" class="w-20 h-20 object-cover rounded-full mx-auto">
                     @else
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                    <x-application-logo class="w-20 h-20 fill-current text-gray-500 rounded-full" />
                     @endif
                 </a>
                 @if(isset($settings) && $settings->company_name)
