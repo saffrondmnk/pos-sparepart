@@ -2,13 +2,13 @@
 
 @section('content')
 <div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-6 flex justify-between items-center">
             <div>
                 <h1 class="text-2xl font-bold text-gray-900">Categories</h1>
                 <p class="mt-1 text-sm text-gray-600">Manage product categories</p>
             </div>
-            <button onclick="document.getElementById('addCategoryModal').classList.remove('hidden')" 
+            <button onclick="document.getElementById('addCategoryModal').classList.remove('hidden')"
                 class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
                 Add Category
             </button>
@@ -32,12 +32,12 @@
                             <td class="px-6 py-4 text-sm text-gray-500">{{ $category->description }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $category->products_count }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <button onclick="document.getElementById('editModal{{ $category->id }}').classList.remove('hidden')" 
+                                <button onclick="document.getElementById('editModal{{ $category->id }}').classList.remove('hidden')"
                                     class="text-blue-600 hover:text-blue-900 mr-3">Edit</button>
                                 <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-900" 
+                                    <button type="submit" class="text-red-600 hover:text-red-900"
                                         onclick="return confirm('Are you sure?')">Delete</button>
                                 </form>
                             </td>

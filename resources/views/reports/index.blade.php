@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-6">
             <h1 class="text-2xl font-bold text-gray-900">Reports</h1>
             <p class="mt-1 text-sm text-gray-600">Generate sales reports and download as PDF</p>
@@ -15,12 +15,12 @@
                     @csrf
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">From Date</label>
-                        <input type="date" name="date_from" value="{{ request('date_from', now()->startOfMonth()->format('Y-m-d')) }}" 
+                        <input type="date" name="date_from" value="{{ request('date_from', now()->startOfMonth()->format('Y-m-d')) }}"
                             class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">To Date</label>
-                        <input type="date" name="date_to" value="{{ request('date_to', now()->format('Y-m-d')) }}" 
+                        <input type="date" name="date_to" value="{{ request('date_to', now()->format('Y-m-d')) }}"
                             class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                     </div>
                     <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">

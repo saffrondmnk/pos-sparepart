@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-6">
             <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
             <p class="mt-1 text-sm text-gray-600">Welcome back, {{ Auth::user()->name }}!</p>
@@ -123,7 +123,7 @@
                             </svg>
                             New Sale
                         </a>
-                        
+
                         @if(Auth::user()->isAdmin())
                         <a href="{{ route('products.index') }}" class="block w-full text-center px-4 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
                             <svg class="inline-block w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -131,7 +131,7 @@
                             </svg>
                             Manage Products
                         </a>
-                        
+
                         <a href="{{ route('reports.index') }}" class="block w-full text-center px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
                             <svg class="inline-block w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -140,7 +140,7 @@
                         </a>
                         @endif
                     </div>
-                    
+
                     <div class="mt-6 pt-6 border-t border-gray-200">
                         <h3 class="text-sm font-semibold text-gray-900 mb-3">Total Revenue</h3>
                         <p class="text-3xl font-bold text-green-600">{{ format_currency($totalRevenue) }}</p>

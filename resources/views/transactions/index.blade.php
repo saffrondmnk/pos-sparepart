@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-6">
             <h1 class="text-2xl font-bold text-gray-900">Sales History</h1>
             <p class="mt-1 text-sm text-gray-600">View all transaction records</p>
@@ -10,11 +10,11 @@
 
         <div class="mb-4">
             <form method="GET" action="{{ route('transactions.index') }}" class="flex gap-4 flex-wrap">
-                <input type="text" name="search" placeholder="Search transaction #" value="{{ request('search') }}" 
+                <input type="text" name="search" placeholder="Search transaction #" value="{{ request('search') }}"
                     class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                <input type="date" name="date_from" value="{{ request('date_from') }}" 
+                <input type="date" name="date_from" value="{{ request('date_from') }}"
                     class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                <input type="date" name="date_to" value="{{ request('date_to') }}" 
+                <input type="date" name="date_to" value="{{ request('date_to') }}"
                     class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                 <button type="submit" class="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700">
                     Filter
@@ -45,7 +45,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $transaction->items->count() }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-semibold">{{ format_currency($transaction->total_amount) }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                                     @if($transaction->payment_method === 'cash') bg-green-100 text-green-800
                                     @elseif($transaction->payment_method === 'card') bg-blue-100 text-blue-800
                                     @else bg-purple-100 text-purple-800 @endif">

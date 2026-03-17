@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="py-12">
-    <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-6">
             <h1 class="text-2xl font-bold text-gray-900">System Settings</h1>
             <p class="mt-1 text-sm text-gray-600">Customize your POS system appearance and receipt information.</p>
@@ -33,17 +33,14 @@
                     <div>
                         <label for="logo" class="block text-sm font-medium text-gray-700">Company Logo</label>
                         <div class="mt-2 flex items-center gap-6">
-                            @if($settings->logo_path && file_exists(public_path($settings->logo_path)))
                             <div class="flex-shrink-0">
-                                <img src="{{ asset($settings->logo_path) }}" alt="Company Logo" class="h-20 w-20 object-contain rounded border border-gray-200">
+                                <img id="logo-preview" src="{{ $settings->logo_path && file_exists(public_path($settings->logo_path)) ? asset($settings->logo_path) : '' }}" alt="Company Logo" class="h-20 w-20 object-contain rounded border border-gray-200 {{ $settings->logo_path && file_exists(public_path($settings->logo_path)) ? '' : 'hidden' }}">
+                                <div id="logo-placeholder" class="h-20 w-20 rounded border border-gray-200 bg-gray-50 flex items-center justify-center {{ $settings->logo_path && file_exists(public_path($settings->logo_path)) ? 'hidden' : '' }}">
+                                    <svg class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
                             </div>
-                            @else
-                            <div class="flex-shrink-0 h-20 w-20 rounded border border-gray-200 bg-gray-50 flex items-center justify-center">
-                                <svg class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                </svg>
-                            </div>
-                            @endif
                             <div class="flex-1">
                                 <input type="file" name="logo" id="logo" accept="image/*"
                                     class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
@@ -54,6 +51,23 @@
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
+
+                    <script>
+                        document.getElementById('logo').addEventListener('change', function(e) {
+                            const file = e.target.files[0];
+                            if (file) {
+                                const reader = new FileReader();
+                                reader.onload = function(e) {
+                                    const preview = document.getElementById('logo-preview');
+                                    const placeholder = document.getElementById('logo-placeholder');
+                                    preview.src = e.target.result;
+                                    preview.classList.remove('hidden');
+                                    placeholder.classList.add('hidden');
+                                }
+                                reader.readAsDataURL(file);
+                            }
+                        });
+                    </script>
 
                     <!-- App Title (Browser Tab) -->
                     <div>

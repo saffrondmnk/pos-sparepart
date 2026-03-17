@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-6">
             <h1 class="text-2xl font-bold text-gray-900">User Sessions</h1>
             <p class="mt-1 text-sm text-gray-600">
@@ -29,7 +29,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <div class="flex items-center">
                     <div class="p-3 rounded-full bg-green-100 text-green-600">
@@ -43,7 +43,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <div class="flex items-center">
                     <div class="p-3 rounded-full bg-purple-100 text-purple-600">
@@ -73,7 +73,7 @@
                         @endforeach
                     </select>
                 </div>
-                
+
                 <div class="flex-1 min-w-[200px]">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
                     <select name="status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
@@ -83,23 +83,23 @@
                         <option value="expired" {{ request('status') == 'expired' ? 'selected' : '' }}>Expired</option>
                     </select>
                 </div>
-                
+
                 <div class="flex-1 min-w-[150px]">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Date From</label>
-                    <input type="date" name="date_from" value="{{ request('date_from') }}" 
+                    <input type="date" name="date_from" value="{{ request('date_from') }}"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                 </div>
-                
+
                 <div class="flex-1 min-w-[150px]">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Date To</label>
-                    <input type="date" name="date_to" value="{{ request('date_to') }}" 
+                    <input type="date" name="date_to" value="{{ request('date_to') }}"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                 </div>
-                
+
                 <button type="submit" class="px-6 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700">
                     Filter
                 </button>
-                
+
                 <a href="{{ route('sessions.index') }}" class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">
                     Clear
                 </a>
@@ -167,7 +167,7 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                                     @if($session->user->role === 'super_admin') bg-purple-100 text-purple-800
                                     @elseif($session->user->role === 'admin') bg-blue-100 text-blue-800
                                     @else bg-green-100 text-green-800 @endif">
@@ -191,7 +191,7 @@
                                 {{ $session->duration }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                                     @if($session->status === 'active') bg-green-100 text-green-800
                                     @elseif($session->status === 'logged_out') bg-gray-100 text-gray-800
                                     @else bg-yellow-100 text-yellow-800 @endif">

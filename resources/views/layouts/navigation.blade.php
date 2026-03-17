@@ -5,19 +5,21 @@
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
                         @if($settings->logo_path && file_exists(public_path($settings->logo_path)))
-                        <img src="{{ asset($settings->logo_path) }}" alt="Logo" class="block h-9 w-auto">
+                        <img src="{{ asset($settings->logo_path) }}" alt="Logo" class="block h-9 w-9 rounded-full object-cover">
                         @else
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <x-application-logo class="block h-9 w-9 fill-current text-gray-800 rounded-full" />
                         @endif
                         <span class="font-semibold text-gray-800 text-lg hidden lg:block">{{ $settings->company_name }}</span>
                     </a>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-16 sm:flex"> --}}
+                <div class="hidden space-x-4 sm:-my-px sm:ms-6 lg:ms-10 sm:flex">
+
+                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    
+
                     @auth
                         @if(Auth::user()->isAdmin())
                         <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.*')">
@@ -30,27 +32,27 @@
                             {{ __('Stock History') }}
                         </x-nav-link>
                         @endif
-                        
+
                         @if(Auth::user()->isAdmin())
                         <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
                             {{ __('Users') }}
                         </x-nav-link>
                         @endif
-                        
+
                         <x-nav-link :href="route('transactions.create')" :active="request()->routeIs('transactions.create')">
                             {{ __('New Sale') }}
                         </x-nav-link>
-                        
+
                         <x-nav-link :href="route('transactions.index')" :active="request()->routeIs('transactions.index')">
                             {{ __('Sales History') }}
                         </x-nav-link>
-                        
+
                         @if(Auth::user()->isAdmin())
                         <x-nav-link :href="route('reports.index')" :active="request()->routeIs('reports.*')">
                             {{ __('Reports') }}
                         </x-nav-link>
                         @endif
-                        
+
                         @if(Auth::user()->isAdmin())
                         <x-nav-link :href="route('sessions.index')" :active="request()->routeIs('sessions.*')">
                             {{ __('Active Sessions') }}
@@ -61,15 +63,13 @@
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <div class="ms-3">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                        @if(Auth::user()->role === 'super_admin') bg-purple-100 text-purple-800
-                        @elseif(Auth::user()->role === 'admin') bg-blue-100 text-blue-800
-                        @else bg-green-100 text-green-800 @endif">
-                        {{ ucfirst(str_replace('_', ' ', Auth::user()->role)) }}
-                    </span>
-                </div>
-                
+                <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full text-xs font-semibold leading-none whitespace-nowrap mr-3
+                    @if(Auth::user()->role === 'super_admin') bg-purple-100 text-purple-800
+                    @elseif(Auth::user()->role === 'admin') bg-blue-100 text-blue-800
+                    @else bg-green-100 text-green-800 @endif">
+                    {{ ucfirst(str_replace('_', ' ', Auth::user()->role)) }}
+                </span>
+
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
@@ -87,7 +87,7 @@
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
-                        
+
                         @if(Auth::user()->isAdmin())
                         <x-dropdown-link :href="route('settings.edit')">
                             {{ __('System Settings') }}
@@ -123,7 +123,7 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            
+
             @auth
                 @if(Auth::user()->isAdmin())
                 <x-responsive-nav-link :href="route('products.index')" :active="request()->routeIs('products.*')">
@@ -136,27 +136,27 @@
                     {{ __('Stock History') }}
                 </x-responsive-nav-link>
                 @endif
-                
+
                 @if(Auth::user()->isAdmin())
                 <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
                     {{ __('Users') }}
                 </x-responsive-nav-link>
                 @endif
-                
+
                 <x-responsive-nav-link :href="route('transactions.create')" :active="request()->routeIs('transactions.create')">
                     {{ __('New Sale') }}
                 </x-responsive-nav-link>
-                
+
                 <x-responsive-nav-link :href="route('transactions.index')" :active="request()->routeIs('transactions.index')">
                     {{ __('Sales History') }}
                 </x-responsive-nav-link>
-                
+
                 @if(Auth::user()->isAdmin())
                 <x-responsive-nav-link :href="route('reports.index')" :active="request()->routeIs('reports.*')">
                     {{ __('Reports') }}
                 </x-responsive-nav-link>
                 @endif
-                
+
                 @if(Auth::user()->isAdmin())
                 <x-responsive-nav-link :href="route('sessions.index')" :active="request()->routeIs('sessions.*')">
                     {{ __('Active Sessions') }}
@@ -175,7 +175,7 @@
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
-                
+
                 @if(Auth::user()->isAdmin())
                 <x-responsive-nav-link :href="route('settings.edit')">
                     {{ __('System Settings') }}

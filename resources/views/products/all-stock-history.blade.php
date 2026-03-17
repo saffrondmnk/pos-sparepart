@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-6 flex justify-between items-center">
             <div>
                 <h1 class="text-2xl font-bold text-gray-900">All Stock History</h1>
@@ -61,12 +61,12 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Date From</label>
-                        <input type="date" name="date_from" value="{{ request('date_from') }}" 
+                        <input type="date" name="date_from" value="{{ request('date_from') }}"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Date To</label>
-                        <input type="date" name="date_to" value="{{ request('date_to') }}" 
+                        <input type="date" name="date_to" value="{{ request('date_to') }}"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
                     <div class="md:col-span-4 flex gap-2">
