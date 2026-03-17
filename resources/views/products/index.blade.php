@@ -3,21 +3,21 @@
 @section('content')
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="mb-6 flex justify-between items-center">
+        <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
                 <h1 class="text-2xl font-bold text-gray-900">Products</h1>
                 <p class="mt-1 text-sm text-gray-600">Manage your product inventory</p>
             </div>
-            <a href="{{ route('products.create') }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+            <a href="{{ route('products.create') }}" class="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-center">
                 Add Product
             </a>
         </div>
 
-        <div class="mb-4 flex gap-4">
-            <form method="GET" action="{{ route('products.index') }}" class="flex gap-2 flex-1">
+        <div class="mb-4">
+            <form method="GET" action="{{ route('products.index') }}" class="flex flex-col sm:flex-row gap-2" id="filter-form">
                 <input type="text" name="search" placeholder="Search products..." value="{{ request('search') }}"
                     class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                <select name="category" class="px-4 py-2 pr-8 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 appearance-none bg-white">
+                <select name="category" id="category-select" class="w-full sm:w-auto px-4 py-2 pr-8 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 appearance-none bg-white">
                     <option value="">All Categories</option>
                     @foreach($categories as $category)
                     <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
@@ -25,11 +25,19 @@
                     </option>
                     @endforeach
                 </select>
-                <button type="submit" class="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700">
-                    Filter
+                <button type="submit" class="w-full sm:w-auto px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700">
+                    Search
                 </button>
             </form>
         </div>
+
+        @push('scripts')
+        <script>
+            document.getElementById('category-select').addEventListener('change', function() {
+                document.getElementById('filter-form').submit();
+            });
+        </script>
+        @endpush
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="overflow-x-auto">
@@ -77,14 +85,16 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <a href="{{ route('products.edit', $product->id) }}" class="text-blue-600 hover:text-blue-900 mr-3">Edit</a>
-                                <a href="{{ route('products.stock.show', $product->id) }}" class="text-purple-600 hover:text-purple-900 mr-3">Update Stock</a>
-                                <a href="{{ route('products.stock.history', $product->id) }}" class="text-green-600 hover:text-green-900 mr-3">History</a>
-                                <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure?')">Delete</button>
-                                </form>
+                                <div class="flex flex-wrap gap-2">
+                                    <a href="{{ route('products.edit', $product->id) }}" class="text-blue-600 hover:text-blue-900">Edit</a>
+                                    <a href="{{ route('products.stock.show', $product->id) }}" class="text-purple-600 hover:text-purple-900">Stock</a>
+                                    <a href="{{ route('products.stock.history', $product->id) }}" class="text-green-600 hover:text-green-900">History</a>
+                                    <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure?')">Delete</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         @empty

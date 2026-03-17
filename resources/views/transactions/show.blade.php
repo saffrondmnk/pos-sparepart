@@ -3,19 +3,19 @@
 @section('content')
 <div class="py-12">
     <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-        <div class="mb-6 flex justify-between items-center">
+        <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
                 <h1 class="text-2xl font-bold text-gray-900">Transaction Details</h1>
                 <p class="mt-1 text-sm text-gray-600">Transaction #{{ $transaction->transaction_number }}</p>
             </div>
-            <div class="flex gap-3">
-                <a href="{{ route('receipt.download', $transaction->id) }}" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+            <div class="flex flex-wrap gap-2 w-full sm:w-auto">
+                <a href="{{ route('receipt.download', $transaction->id) }}" class="flex-1 sm:flex-none px-3 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition text-center">
                     Download Receipt
                 </a>
-                <a href="{{ route('transactions.index') }}" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+                <a href="{{ route('transactions.index') }}" class="flex-1 sm:flex-none px-3 py-2 border border-gray-300 text-gray-700 text-sm rounded-lg hover:bg-gray-50 transition text-center">
                     List Transaction
                 </a>
-                <a href="{{ route('transactions.create') }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                <a href="{{ route('transactions.create') }}" class="flex-1 sm:flex-none px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition text-center">
                     Back to New Sale
                 </a>
             </div>
