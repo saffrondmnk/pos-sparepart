@@ -56,7 +56,7 @@
     <div class="header">
         @if($settings->logo_path && file_exists(public_path($settings->logo_path)))
         <div style="margin-bottom: 10px;">
-            <img src="{{ public_path($settings->logo_path) }}" alt="Logo" style="max-height: 60px; max-width: 120px;">
+            <img src="{{ public_path($settings->logo_path) }}" alt="Logo" style="max-height: 80px; max-width: 80px; height: 80px; width: 80px; object-fit: cover; border-radius: 50%;">
         </div>
         @endif
         <div class="company-name">{{ $settings->receipt_title }}</div>
